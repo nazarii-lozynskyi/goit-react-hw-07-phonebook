@@ -12,10 +12,11 @@ import {
 //import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-
+import { setupListeners } from '@reduxjs/toolkit/query';
 import logger from 'redux-logger';
 
 import contactsReducer from './phonebook/phonebook-reducer';
+import { phoneBookApi } from './phonebook/phonebook-slice';
 
 //const contactsPersistConfig = {
 //  key: 'Contacts',
@@ -31,19 +32,36 @@ const rootReducer = combineReducers({
   contacts: contactsReducer,
 });
 
-const store = configureStore({
-  reducer: rootReducer,
+export const store = configureStore({
+  reducer: { rootReducer, [phoneBookApi.reducerPath]: phoneBookApi.reducer },
   devTools: process.env.NODE_ENV === 'development',
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(logger),
+    }),
+    phoneBookApi.middleware,
+
+    logger,
+  ],
 });
+
+//export const store = configureStore({
+//  reducer: { rootReducer, [phoneBookApi.reducerPath]: phoneBookApi.reducer },
+//  devTools: process.env.NODE_ENV === 'development',
+//  middleware: getDefaultMiddleware =>
+//    getDefaultMiddleware({
+//      serializableCheck: {
+//        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//      },
+//    }).concat(logger),
+//});
 
 //const persistor = persistStore(store);
 
 //export default { store, persistor };
 
-export default store;
+//export default store;
+
+setupListeners(store.dispatch);
