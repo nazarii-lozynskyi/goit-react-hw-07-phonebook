@@ -20,4 +20,7 @@ export const deleteContactSuccess = createAction(
 );
 export const deleteContactError = createAction('contacts/deleteContactError');
 
-export const changeFilter = createAction('contacts/changeFilter');
+const changeFilter = createAction('contacts/changeFilter');
+
+// eslint-disable-next-line import/no-anonymous-default-export
+export default { changeFilter };
