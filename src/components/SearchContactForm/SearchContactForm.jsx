@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import actions from 'redux/phonebook/phonebook-actions';
+import { getFilter } from 'redux/phonebook';
 
 import Stats from '../Stats';
 
@@ -52,11 +52,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 function SearchContactForm() {
-  const filter = useSelector(state => state.filter);
+  const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
-  const changeFilter = event =>
-    dispatch(actions.changeFilter(event.target.value));
+  const changeFilter = e => dispatch(changeFilter(e.target.value));
 
   return (
     <Box
