@@ -1,24 +1,20 @@
 import { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-
-import { v4 as uuidv4 } from 'uuid';
-
 import PropTypes from 'prop-types';
 
-import contactOperations from 'redux/phonebook/phonebook-operations';
+import { useCreateContactMutation } from 'redux/phonebook/phonebook-slice';
+
+import { toast } from 'react-toastify';
 
 import { AccountCircle, AddIcCall, LocalPhone } from '@mui/icons-material';
 import { Button, TextField, Tooltip } from '@mui/material';
 import { Box } from '@mui/system';
 
-function Form() {
+function Form({ contacts }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const dispatch = useDispatch();
-  const onSubmit = (name, number) =>
-    dispatch(contactOperations.addContact(name, number));
+  const [createContact] = useCreateContactMutation();
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -40,13 +36,20 @@ function Form() {
   const handleSubmit = event => {
     event.preventDefault();
 
+    if (contacts) {
+      if (contacts.some(contact => contact.name.includes(name))) {
+        toast.error(`${name} is already in contacts`);
+        reset();
+        return;
+      }
+    }
+
     const contact = {
-      id: uuidv4(),
       name: name,
       number: number,
     };
 
-    onSubmit(contact);
+    createContact(contact);
 
     reset();
   };
