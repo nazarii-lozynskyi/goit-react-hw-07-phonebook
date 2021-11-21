@@ -10,8 +10,8 @@ import {
   fetchContactsRequest,
   fetchContactsSuccess,
   fetchContactsError,
+  changeFilter,
 } from './phonebook-actions';
-import actions from './phonebook-actions';
 
 const items = createReducer([], {
   [fetchContactsSuccess]: (_, { payload }) => payload,
@@ -33,7 +33,7 @@ const loading = createReducer(false, {
 });
 
 const filter = createReducer('', {
-  [actions.changeFilter]: (_, { payload }) => payload,
+  [changeFilter]: (_, { payload }) => payload,
 });
 
 const error = createReducer(null, {});
