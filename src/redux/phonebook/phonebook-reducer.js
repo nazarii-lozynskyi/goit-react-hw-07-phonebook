@@ -54,4 +54,6 @@ const filter = createReducer('', {
 export default combineReducers({
   items,
   filter,
+  error,
+  loading,
 });
