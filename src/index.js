@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 //import { PersistGate } from 'redux-persist/integration/react';
 
-import store from './redux/store';
+import { store } from './redux/store';
 
 import './index.css';
 import App from './App';
