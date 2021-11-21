@@ -1,33 +1,34 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import actions from "redux/phonebook/phonebook-actions";
+import contactOperations from 'redux/phonebook/phonebook-operations';
 
-import { AccountCircle, AddIcCall, LocalPhone } from "@mui/icons-material";
-import { Button, TextField, Tooltip } from "@mui/material";
-import { Box } from "@mui/system";
+import { AccountCircle, AddIcCall, LocalPhone } from '@mui/icons-material';
+import { Button, TextField, Tooltip } from '@mui/material';
+import { Box } from '@mui/system';
 
 function Form() {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const onSubmit = (name, number) => dispatch(actions.addContact(name, number));
+  const onSubmit = (name, number) =>
+    dispatch(contactOperations.addContact(name, number));
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const { name, value } = event.currentTarget;
 
     switch (name) {
-      case "name":
+      case 'name':
         setName(value);
         break;
 
-      case "number":
+      case 'number':
         setNumber(value);
         break;
 
@@ -36,7 +37,7 @@ function Form() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
 
     const contact = {
@@ -51,23 +52,23 @@ function Form() {
   };
 
   const reset = () => {
-    setName("");
-    setNumber("");
+    setName('');
+    setNumber('');
   };
 
   return (
-    <Box sx={{ marginTop: "20px" }} component="form" onSubmit={handleSubmit}>
+    <Box sx={{ marginTop: '20px' }} component="form" onSubmit={handleSubmit}>
       <Tooltip title="Enter name" placement="left">
         <Box
           sx={{
-            display: "flex",
-            alignItems: "flex-end",
+            display: 'flex',
+            alignItems: 'flex-end',
             width: 214,
-            maxWidth: "100%",
-            marginBottom: "15px",
+            maxWidth: '100%',
+            marginBottom: '15px',
           }}
         >
-          <AccountCircle sx={{ color: "primary.dark", mr: 1, my: 0.5 }} />
+          <AccountCircle sx={{ color: 'primary.dark', mr: 1, my: 0.5 }} />
           <TextField
             id="input-Name"
             label="Name"
@@ -85,14 +86,14 @@ function Form() {
       <Tooltip title="Enter phone number" placement="left">
         <Box
           sx={{
-            display: "flex",
-            alignItems: "flex-end",
+            display: 'flex',
+            alignItems: 'flex-end',
             width: 214,
-            maxWidth: "100%",
-            marginBottom: "15px",
+            maxWidth: '100%',
+            marginBottom: '15px',
           }}
         >
-          <LocalPhone sx={{ color: "primary.dark", mr: 1, my: 0.5 }} />
+          <LocalPhone sx={{ color: 'primary.dark', mr: 1, my: 0.5 }} />
           <TextField
             id="input-Phone"
             label="Phone"
@@ -113,7 +114,7 @@ function Form() {
           type="submit"
           startIcon={<AddIcCall />}
           sx={{
-            marginBottom: "0px",
+            marginBottom: '0px',
           }}
         >
           Add contact
