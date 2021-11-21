@@ -1,9 +1,3 @@
-import { connect } from 'react-redux';
-import actions from './redux/phonebook/phonebook-actions';
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 import Contacts from './components/Contacts';
 import Form from './components/Form/Form';
 import Header from './components/Header';
@@ -11,13 +5,10 @@ import SearchContactForm from './components/SearchContactForm';
 
 import { Container } from '@mui/material';
 
-function App({ items, filter, addContact, deleteContact, onChangeFilter }) {
-  const searchContact = value => {
-    return items.filter(contact => {
-      return contact.name.toLocaleLowerCase().includes(value);
-    });
-  };
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+function App({ items, addContact }) {
   return (
     <>
       <Header />
@@ -37,25 +28,10 @@ function App({ items, filter, addContact, deleteContact, onChangeFilter }) {
           progress={undefined}
         />
 
-        {filter === '' ? (
-          <Contacts contacts={items} deleteContact={deleteContact} />
-        ) : (
-          <Contacts contacts={searchContact(filter)} />
-        )}
+        <Contacts />
       </Container>
     </>
   );
 }
 
-const mapStateToProps = state => ({
-  items: state.contacts.items,
-  filter: state.contacts.filter,
-});
-
-const mapDispatchToProps = dispatch => ({
-  addContact: value => dispatch(actions.addContact(value)),
-  deleteContact: value => dispatch(actions.deleteContact(value)),
-  changeFilter: value => dispatch(actions.changeFilter(value.target.value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
