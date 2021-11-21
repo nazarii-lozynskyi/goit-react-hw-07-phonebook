@@ -1,6 +1,6 @@
-const getFilter = state => state.contacts.filter;
+const getFilter = state => state.rootReducer.contacts.filter;
 
-const getAllContacts = state => state.contacts.items;
+const getAllContacts = state => state.rootReducer.contacts.items;
 
 const getVisibleContacts = (contacts, filter) => {
   const normalizedFilter = filter.toLowerCase().trim();
