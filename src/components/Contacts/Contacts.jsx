@@ -27,12 +27,14 @@ function Contacts() {
     return contacts.filter(
       contact =>
         contact.name.toLowerCase().includes(normalizedFilter) ||
-        contact.phone.includes(filter)
+        contact.number.includes(filter)
     );
   };
+
   const { data: contacts } = useFetchContactsQuery();
 
   const [deleteContact] = useDeleteContactMutation();
+
   return (
     <>
       <List sx={{ bgcolor: 'background.paper' }} className={styles.list}>
