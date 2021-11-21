@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getFilter } from 'redux/phonebook';
+import { changeFilter, getFilter } from 'redux/phonebook';
 
 import Stats from '../Stats';
 
@@ -55,7 +55,7 @@ function SearchContactForm() {
   const filter = useSelector(getFilter);
 
   const dispatch = useDispatch();
-  const changeFilter = e => dispatch(changeFilter(e.target.value));
+  const onChangeFilter = e => dispatch(changeFilter(e.target.value));
 
   return (
     <Box
@@ -91,7 +91,7 @@ function SearchContactForm() {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           required
           value={filter}
-          onChange={changeFilter}
+          onChange={onChangeFilter}
         />
       </Search>
 
