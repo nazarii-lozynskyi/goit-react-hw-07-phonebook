@@ -4,10 +4,16 @@ function Stats({ total }) {
   return <span>{total}</span>;
 }
 
-const mapStateToProps = state => ({
-  total: 3,
+function mapStateToProps(state) {
+  if (
+    state.contactsApi.queries.fetchContacts &&
+    state.contactsApi.queries.fetchContacts.data
+  ) {
+    console.log(state.contactsApi.queries.fetchContacts.data.length);
+    return { total: state.contactsApi.queries.fetchContacts.data.length };
+  }
 
-  //total: state.contactsApi.queries.fetchContacts.data.length,
-});
+  return;
+}
 
 export default connect(mapStateToProps)(Stats);
