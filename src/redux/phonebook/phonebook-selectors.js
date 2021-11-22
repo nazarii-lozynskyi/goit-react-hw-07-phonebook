@@ -8,7 +8,7 @@ const getVisibleContacts = (contacts, filter) => {
   return contacts.filter(
     contact =>
       contact.name.toLowerCase().includes(normalizedFilter) ||
-      contact.phone.includes(filter)
+      contact.number.includes(filter)
   );
 };
 
