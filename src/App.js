@@ -12,16 +12,18 @@ import { Container } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function App({ addContact }) {
+function App() {
   const { data, error, isFetching } = useFetchContactsQuery();
 
   return (
     <>
       <Header />
       <Container>
-        <Form onSubmit={addContact} contacts={data} />
+        <Form contacts={data} />
 
         <SearchContactForm />
+
+        {isFetching && data && <Loader />}
 
         <ToastContainer
           theme="colored"
@@ -33,8 +35,6 @@ function App({ addContact }) {
           draggable={true}
           progress={undefined}
         />
-
-        {isFetching && data && <Loader />}
 
         {!data && <Skeleton />}
 
