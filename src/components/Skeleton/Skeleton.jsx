@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 export default function Variants() {
   return (
-    <Box>
+    <Box sx={{ marginTop: 2 }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Skeleton
           variant="circular"
