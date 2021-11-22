@@ -16,7 +16,10 @@ import {
   ListItemText,
 } from '@mui/material';
 
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import styles from './Contact.module.css';
+import './Contacts.css';
 
 function Contacts() {
   const filter = useSelector(getFilter);
@@ -38,35 +41,41 @@ function Contacts() {
   return (
     <>
       <List sx={{ bgcolor: 'background.paper' }} className={styles.list}>
-        {contacts &&
-          getVisibleContacts(contacts, filter)?.map(({ id, name, number }) => (
-            <ListItem
-              sx={{
-                borderColor: 'primary.main',
-                border: 1,
-                borderRadius: 2,
-              }}
-              className={styles.item}
-              key={id}
-            >
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: 'primary.dark' }}>
-                  <AccountBox />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={name} secondary={number} />
-              <IconButton
-                type="button"
-                edge="end"
-                aria-label="delete"
-                sx={{ marginLeft: '40px' }}
-                onClick={() => deleteContact(id)}
-                id={id}
-              >
-                <Delete sx={{ color: 'error.main' }} />
-              </IconButton>
-            </ListItem>
-          ))}
+        <TransitionGroup>
+          {contacts &&
+            getVisibleContacts(contacts, filter)?.map(
+              ({ id, name, number }) => (
+                <CSSTransition key={id} timeout={500} classNames="item">
+                  <ListItem
+                    sx={{
+                      borderColor: 'primary.main',
+                      border: 1,
+                      borderRadius: 2,
+                    }}
+                    className={styles.Item}
+                    key={id}
+                  >
+                    <ListItemAvatar>
+                      <Avatar sx={{ bgcolor: 'primary.dark' }}>
+                        <AccountBox />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={name} secondary={number} />
+                    <IconButton
+                      type="button"
+                      edge="end"
+                      aria-label="delete"
+                      sx={{ marginLeft: '40px' }}
+                      onClick={() => deleteContact(id)}
+                      id={id}
+                    >
+                      <Delete sx={{ color: 'error.main' }} />
+                    </IconButton>
+                  </ListItem>
+                </CSSTransition>
+              )
+            )}
+        </TransitionGroup>
       </List>
     </>
   );
