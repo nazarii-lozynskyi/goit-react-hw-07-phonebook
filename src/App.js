@@ -23,8 +23,6 @@ function App() {
 
         <SearchContactForm />
 
-        {isFetching && data && <Loader />}
-
         <ToastContainer
           theme="colored"
           position="top-right"
@@ -39,6 +37,8 @@ function App() {
         {!data && <Skeleton />}
 
         {data && <Contacts />}
+
+        {isFetching && data && <Loader />}
 
         {error && <h4>{error}</h4>}
       </Container>
