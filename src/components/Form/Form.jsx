@@ -36,6 +36,15 @@ function Form({ contacts }) {
   const handleSubmit = event => {
     event.preventDefault();
 
+    //const contacts = useSelector(contactsSelector.getContacts);
+    //const duplicateContact = contacts.find(
+    //  contact => contact.name.toLowerCase() === name.toLowerCase()
+    //);
+    //if (duplicateContact) {
+    //  toast.warning('Contact is already added !!!');
+    //  return;
+    //}
+
     if (contacts) {
       if (contacts.some(contact => contact.name.includes(name))) {
         toast.error(`${name} is already in contacts`);
