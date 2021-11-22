@@ -21,7 +21,7 @@ function App() {
       <Container>
         <Form contacts={data} />
 
-        <SearchContactForm />
+        {data && <SearchContactForm />}
 
         <ToastContainer
           theme="colored"
