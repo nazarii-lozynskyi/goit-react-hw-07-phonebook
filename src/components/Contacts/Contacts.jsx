@@ -21,6 +21,8 @@ import MuiAlert from '@mui/material/Alert';
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 import styles from './Contact.module.css';
 import './Contacts.css';
 
@@ -62,50 +64,67 @@ function Contacts() {
 
   return (
     <>
-      <List sx={{ bgcolor: 'background.paper' }} className={styles.list}>
-        <TransitionGroup>
-          {contacts &&
-            getVisibleContacts(contacts, filter)?.map(
-              ({ id, name, number }) => (
-                <CSSTransition key={id} timeout={500} classNames="item">
-                  <ListItem
-                    sx={{
-                      borderColor: 'primary.main',
-                      border: 1,
-                      borderRadius: 2,
-                    }}
-                    className={styles.Item}
-                    key={id}
-                  >
-                    <ListItemAvatar>
-                      <Avatar sx={{ bgcolor: 'primary.dark' }}>
-                        <AccountBox />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={name} secondary={number} />
-                    <IconButton
-                      type="button"
-                      edge="end"
-                      aria-label="delete"
-                      sx={{ marginLeft: '40px' }}
-                      onClick={() => {
-                        deleteContact(id);
-                        handleClick();
-                      }}
-                      id={id}
-                    >
-                      <Delete sx={{ color: 'error.main' }} />
-                    </IconButton>
-                  </ListItem>
-                </CSSTransition>
-              )
-            )}
-        </TransitionGroup>
-      </List>
+      <DragDropContext>
+        <Droppable droppableId="characters">
+          {provided => (
+            <List
+              sx={{ bgcolor: 'background.paper' }}
+              className={styles.list}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              <TransitionGroup>
+                {contacts &&
+                  getVisibleContacts(contacts, filter)?.map(
+                    ({ id, name, number }, index) => (
+                      <CSSTransition key={id} timeout={500} classNames="item">
+                        <Draggable key={id} draggableId={id} index={index}>
+                          {provided => (
+                            <ListItem
+                              sx={{
+                                borderColor: 'primary.main',
+                                border: 1,
+                                borderRadius: 2,
+                              }}
+                              className={styles.Item}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              ref={provided.innerRef}
+                            >
+                              <ListItemAvatar>
+                                <Avatar sx={{ bgcolor: 'primary.dark' }}>
+                                  <AccountBox />
+                                </Avatar>
+                              </ListItemAvatar>
+                              <ListItemText primary={name} secondary={number} />
+                              <IconButton
+                                type="button"
+                                edge="end"
+                                aria-label="delete"
+                                sx={{ marginLeft: '40px' }}
+                                onClick={() => {
+                                  deleteContact(id);
+                                  handleClick();
+                                }}
+                                id={id}
+                              >
+                                <Delete sx={{ color: 'error.main' }} />
+                              </IconButton>
+                            </ListItem>
+                          )}
+                        </Draggable>
+                      </CSSTransition>
+                    )
+                  )}
+              </TransitionGroup>
+            </List>
+          )}
+        </Droppable>
+      </DragDropContext>
 
       <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          Сontact deleted
+          Contact deleted
         </Alert>
       </Snackbar>
     </>
