@@ -5,6 +5,8 @@ function Stats({ total }) {
 }
 
 function mapStateToProps(state) {
+  console.log(state.contactsApi.queries.fetchContacts.data.length);
+
   if (
     state.contactsApi.queries.fetchContacts &&
     state.contactsApi.queries.fetchContacts.data
@@ -13,7 +15,7 @@ function mapStateToProps(state) {
     return { total: state.contactsApi.queries.fetchContacts.data.length };
   }
 
-  return;
+  return { total: state.contactsApi.queries.fetchContacts.data.length };
 }
 
 export default connect(mapStateToProps)(Stats);
