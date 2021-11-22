@@ -2,18 +2,24 @@ import Contacts from './components/Contacts';
 import Form from './components/Form/Form';
 import Header from './components/Header';
 import SearchContactForm from './components/SearchContactForm';
+import Loader from 'components/Loader';
+import Skeleton from 'components/Skeleton';
+
+import { useFetchContactsQuery } from './redux/phonebook/phonebook-slice.js';
 
 import { Container } from '@mui/material';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function App({ items, addContact }) {
+function App({ addContact }) {
+  const { data, error, isFetching } = useFetchContactsQuery();
+
   return (
     <>
       <Header />
       <Container>
-        <Form onSubmit={addContact} />
+        <Form onSubmit={addContact} contacts={data} />
 
         <SearchContactForm />
 
@@ -28,7 +34,13 @@ function App({ items, addContact }) {
           progress={undefined}
         />
 
-        <Contacts />
+        {isFetching && data && <Loader />}
+
+        {!data && <Skeleton />}
+
+        {data && <Contacts />}
+
+        {error && <h4>{error}</h4>}
       </Container>
     </>
   );
